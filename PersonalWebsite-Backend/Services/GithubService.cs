@@ -60,12 +60,45 @@ namespace PersonalWebsite_Backend.Services
                     return null; 
                 }
             }
-            catch (HttpRequestException ex)
+            catch (Exception ex) 
             {
-                _logger.LogError(ex, "HTTP request to GitHub API failed for user {Username}.", username);
-                return null; // TODO: throw exception?
+                _logger.LogError(ex, "An unexpected error occurred while fetching GitHub user {Username}.", username);
+                return null; // TODO: throw exception
             }
-            catch (Exception ex) // Catch other potential exceptions
+        }
+        
+        public async Task<string?> GetRepositoriesAsync(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                _logger.LogWarning("GetRepositoriesAsync called with null or whitespace username.");
+                throw new ArgumentNullException(nameof(username));
+            }
+
+            _logger.LogInformation("Attempting to fetch GitHub user: {Username}", username);
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"users/{username}/repos");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // String
+                    var data = await response.Content.ReadAsStringAsync();
+                    _logger.LogInformation("Successfully fetched respositories for GitHub user: {Username}", username);
+                    return data;
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    _logger.LogWarning("Failed to fetch GitHub user {Username}. Status Code: {StatusCode}. Response: {ErrorResponse}",
+                        username, response.StatusCode, errorContent);
+                    
+                    // TODO: throw specific exceptions for different error types (404, 500 etc)
+                    return null; 
+                }
+            }
+            catch (Exception ex) 
             {
                 _logger.LogError(ex, "An unexpected error occurred while fetching GitHub user {Username}.", username);
                 return null; // TODO: throw exception

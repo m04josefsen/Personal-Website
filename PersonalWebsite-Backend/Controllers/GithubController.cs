@@ -19,7 +19,10 @@ namespace PersonalWebsite_Backend.Controllers
             _githubService = githubService;
             _logger = logger;
         }
-
+        
+        
+        // TODO: lagre i objekt å sende det istedenfor?
+        // api/github/user/{username}
         [HttpGet("user/{username}")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)] 
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -36,8 +39,47 @@ namespace PersonalWebsite_Backend.Controllers
             try
             {
                 _logger.LogInformation("Processing request for GitHub user: {Username}", username);
-                // Await the call to the asynchronous service method.
+                // Await the call to the asynchronous service method
                 var userDataJson = await _githubService.GetUserAsync(username);
+
+                if (userDataJson != null)
+                {
+                    // The GitHub API returns JSON, we forward
+                    return Content(userDataJson, "application/json");
+                }
+                else
+                {
+                    _logger.LogInformation("GitHub user {Username} not found or error during service call.", username);
+                    return NotFound($"Information for GitHub user '{username}' could not be found or retrieved.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while processing request for GitHub user {Username}.", username);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error occurred. Please try again later.");
+            }
+        }
+        
+        // TODO: repo object og sende som array?
+        // api/github/user/{username}/repositories
+        [HttpGet("user/{username}/repositories")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)] 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetGithubUserRepositories([FromRoute] string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                _logger.LogWarning("GetGithubUserRepositories called with empty username.");
+                return BadRequest("Username must be provided.");
+            }
+
+            try
+            {
+                _logger.LogInformation("Processing request for GitHub user: {Username}", username);
+                // Await the call to the asynchronous service method
+                var userDataJson = await _githubService.GetRepositoriesAsync(username);
 
                 if (userDataJson != null)
                 {
