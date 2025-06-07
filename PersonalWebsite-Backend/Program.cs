@@ -15,6 +15,14 @@ builder.Services.AddHttpClient<PersonalWebsite_Backend.Services.GithubService>(c
     client.DefaultRequestHeaders.UserAgent.ParseAdd("PersonalWebsite-Backend/1.0");
 });
 
+// Register HttpClient for SpotifyService with configurations
+builder.Services.AddHttpClient<PersonalWebsite_Backend.Services.SpotifyService>(client =>
+{
+    client.BaseAddress = new Uri("https://api.spotify.com/v1/");
+    // TODO: user agent header for Spotify?
+    // client.DefaultRequestHeaders.UserAgent.ParseAdd("PersonalWebsite-Backend/1.0");
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -17,7 +17,7 @@ namespace PersonalWebsite_Backend.Services
             _httpClient = httpClient;
             _logger = logger;
 
-            // TODO: baseadress in Spotify aswell?
+            // Set in Program.cs, double check
             if (_httpClient.BaseAddress == null)
             {
                 _httpClient.BaseAddress = new Uri("https://api.github.com/");
