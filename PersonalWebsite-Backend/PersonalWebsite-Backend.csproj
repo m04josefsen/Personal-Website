@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="frontend/**/*">
+        <Content Include="Frontend/**/*">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         </Content>
