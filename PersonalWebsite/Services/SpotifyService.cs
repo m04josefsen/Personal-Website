@@ -1,4 +1,4 @@
-namespace PersonalWebsite_Backend.Services;
+namespace PersonalWebsite.Services;
 
 public class SpotifyService
 {
@@ -19,7 +19,7 @@ public class SpotifyService
         {
             // TODO: User agent for spotify?
             // User-Agent header for Github API
-            _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("PersonalWebsite-Backend/1.0");
+            _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("PersonalWebsite/1.0");
         }
     }
     

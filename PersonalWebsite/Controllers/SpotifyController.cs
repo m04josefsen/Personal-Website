@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using PersonalWebsite_Backend.Services;
+using PersonalWebsite.Services;
 
-namespace PersonalWebsite_Backend.Controllers;
+namespace PersonalWebsite.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

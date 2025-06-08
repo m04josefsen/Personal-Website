@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging; 
-using PersonalWebsite_Backend.Services;
+using PersonalWebsite.Services;
 
-namespace PersonalWebsite_Backend.Controllers
+namespace PersonalWebsite.Controllers
 {
     [ApiController]
     [Route("api/[controller]")] 

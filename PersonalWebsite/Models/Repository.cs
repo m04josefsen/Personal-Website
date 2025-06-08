@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace PersonalWebsite_Backend.Models;
+namespace PersonalWebsite.Models;
 
 public class Repository
 {

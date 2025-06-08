@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging; 
 
-namespace PersonalWebsite_Backend.Services
+namespace PersonalWebsite.Services
 {
     public class GithubService
     {
@@ -25,7 +25,7 @@ namespace PersonalWebsite_Backend.Services
             if (!_httpClient.DefaultRequestHeaders.UserAgent.Any())
             {
                 // User-Agent header for Github API
-                _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("PersonalWebsite-Backend/1.0");
+                _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("PersonalWebsite/1.0");
             }
         }
 

@@ -5,7 +5,8 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
-        <RootNamespace>PersonalWebsite_Backend</RootNamespace>
+        <RootNamespace>PersonalWebsite</RootNamespace>
+        <AssemblyName>PersonalWebsite</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

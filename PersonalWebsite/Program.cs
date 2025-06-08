@@ -10,19 +10,19 @@ var token = Environment.GetEnvironmentVariable("ACCESS_TOKEN");
 builder.Services.AddControllers();
 
 // Register HttpClient for GithubService with configurations
-builder.Services.AddHttpClient<PersonalWebsite_Backend.Services.GithubService>(client =>
+builder.Services.AddHttpClient<PersonalWebsite.Services.GithubService>(client =>
 {
     client.BaseAddress = new Uri("https://api.github.com/");
-    client.DefaultRequestHeaders.UserAgent.ParseAdd("PersonalWebsite-Backend/1.0");
+    client.DefaultRequestHeaders.UserAgent.ParseAdd("PersonalWebsite/1.0");
 });
 
 // Register HttpClient for SpotifyService with configurations
-builder.Services.AddHttpClient<PersonalWebsite_Backend.Services.SpotifyService>(client =>
+builder.Services.AddHttpClient<PersonalWebsite.Services.SpotifyService>(client =>
 {
     client.BaseAddress = new Uri("https://api.spotify.com/v1/");
     client.DefaultRequestHeaders.Authorization = 
         new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-    client.DefaultRequestHeaders.UserAgent.ParseAdd("PersonalWebsite-Backend/1.0");
+    client.DefaultRequestHeaders.UserAgent.ParseAdd("PersonalWebsite/1.0");
 });
 
 var app = builder.Build();

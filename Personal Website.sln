@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite-Backend", "PersonalWebsite-Backend\PersonalWebsite-Backend.csproj", "{995CC991-4A9A-4BE8-8DDB-392D4134C719}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite", "PersonalWebsite\PersonalWebsite.csproj", "{995CC991-4A9A-4BE8-8DDB-392D4134C719}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
