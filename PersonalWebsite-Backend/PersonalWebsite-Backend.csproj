@@ -14,7 +14,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Frontend\" />
+        <Content Include="frontend/**/*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>
