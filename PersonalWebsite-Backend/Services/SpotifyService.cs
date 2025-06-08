@@ -29,8 +29,18 @@ public class SpotifyService
 
         try
         {
-            HttpResponseMessage response = await _httpClient.GetAsync($"me/player/currently-playing");
+            // TODO: FIX DETTE, enten gitignore eller heroku config vars
+            string accessToken = "ACCESS_TOKEN";
 
+            // Add the Authorization header
+            _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+            
+            HttpResponseMessage response = await _httpClient.GetAsync($"me/player/currently-playing");
+            
+            // TODO: egen melding om 204 not playing
+            
             if (response.IsSuccessStatusCode)
             {
                 // String

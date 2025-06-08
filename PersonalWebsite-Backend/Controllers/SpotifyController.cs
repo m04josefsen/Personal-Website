@@ -16,8 +16,9 @@ public class SpotifyController : ControllerBase
         _logger = logger;
     }
     
+    // TODO: more status code?
     // api/spotify/currentlyplaying
-    [HttpGet]
+    [HttpGet("currentlyplaying")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)] 
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -32,7 +33,8 @@ public class SpotifyController : ControllerBase
 
             if (userDataJson != null)
             {
-                // The GitHub API returns JSON, we forward
+                // The Spotify returns JSON, we forward
+                // TODO: format data
                 return Content(userDataJson, "application/json");
             }
             else
