@@ -32,14 +32,14 @@ var app = builder.Build();
 app.UseDefaultFiles(new DefaultFilesOptions
 {
     FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "frontend"))
+        Path.Combine(Directory.GetCurrentDirectory(), "Frontend"))
 });
 
 // Serve static files (JS, CSS, etc.)
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "frontend")),
+        Path.Combine(Directory.GetCurrentDirectory(), "Frontend")),
     RequestPath = ""
 });
 
