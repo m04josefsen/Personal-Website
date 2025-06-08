@@ -104,5 +104,46 @@ namespace PersonalWebsite_Backend.Services
                 return null; // TODO: throw exception
             }
         }
+        
+        // /repos/{owner}/{repo} only shows one language
+        public async Task<string?> GetRepositoryLanguagesAsync(string username, string repository)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                _logger.LogWarning("GetRepositoryLanguagesAsync called with null or whitespace username/repository.");
+                throw new ArgumentNullException(nameof(username));
+            }
+
+            // TODO: fjern logg?
+            // _logger.LogInformation("Attempting to fetch GitHub user: {Username}", username);
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"repos/{username}/{repository}/languages");
+
+                // TODO: fiks logg på alle
+                if (response.IsSuccessStatusCode)
+                {
+                    // String
+                    var data = await response.Content.ReadAsStringAsync();
+                    _logger.LogInformation("Successfully fetched respositories for GitHub user: {Username}", username);
+                    return data;
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    _logger.LogWarning("Failed to fetch GitHub user {Username}. Status Code: {StatusCode}. Response: {ErrorResponse}",
+                        username, response.StatusCode, errorContent);
+                    
+                    // TODO: throw specific exceptions for different error types (404, 500 etc)
+                    return null; 
+                }
+            }
+            catch (Exception ex) 
+            {
+                _logger.LogError(ex, "An unexpected error occurred while fetching GitHub user {Username}.", username);
+                return null; // TODO: throw exception
+            }
+        }
     }
 }

@@ -29,13 +29,14 @@ public class SpotifyService
 
         try
         {
-            // TODO: FIX DETTE, enten gitignore eller heroku config vars
+            /* Currently fixed in program.cs
             string accessToken = "ACCESS_TOKEN";
 
             // Add the Authorization header
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+                */
             
             HttpResponseMessage response = await _httpClient.GetAsync($"me/player/currently-playing");
             

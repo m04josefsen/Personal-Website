@@ -98,5 +98,52 @@ namespace PersonalWebsite_Backend.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error occurred. Please try again later.");
             }
         }
+        
+        // TODO: langauges for info under
+        // api/github/user/{username}/languages
+        [HttpGet("user/{username}/repository/{repository}")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)] 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetLanguagesForRepository([FromRoute] string username, [FromRoute] string repository)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                _logger.LogWarning("GetLanguesForRepository called with empty username.");
+                return BadRequest("Username must be provided.");
+            }
+            
+            if (string.IsNullOrWhiteSpace(repository))
+            {
+                _logger.LogWarning("GetLanguesForRepository called with empty repository.");
+                return BadRequest("Username must be provided.");
+            }
+
+            try
+            {
+                // TODO: for mange logs?
+                // _logger.LogInformation("Processing request for GitHub user: {Username}", username);
+                // Await the call to the asynchronous service method
+                var userDataJson = await _githubService.GetRepositoryLanguagesAsync(username, repository);
+
+                if (userDataJson != null)
+                {
+                    // The GitHub API returns JSON, we forward
+                    return Content(userDataJson, "application/json");
+                }
+                else
+                {
+                    // TODO: for mang elogs?
+                    // _logger.LogInformation("GitHub user {Username} not found or error during service call.", username);
+                    return NotFound($"Information for GitHub user '{username}' could not be found or retrieved.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while processing request for Languges for repository");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error occurred. Please try again later.");
+            }
+        }
     }
 }

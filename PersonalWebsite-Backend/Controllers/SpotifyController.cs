@@ -4,7 +4,7 @@ using PersonalWebsite_Backend.Services;
 namespace PersonalWebsite_Backend.Controllers;
 
 [ApiController]
-[Route("api[/controller]")]
+[Route("api/[controller]")]
 public class SpotifyController : ControllerBase
 {
     private readonly SpotifyService _spotifyService;

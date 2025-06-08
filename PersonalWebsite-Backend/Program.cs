@@ -1,7 +1,11 @@
+using dotenv.net;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+DotEnv.Load();
+var token = Environment.GetEnvironmentVariable("ACCESS_TOKEN");
 
+// Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 // builder.Services.AddEndpointsApiExplorer();
@@ -19,8 +23,9 @@ builder.Services.AddHttpClient<PersonalWebsite_Backend.Services.GithubService>(c
 builder.Services.AddHttpClient<PersonalWebsite_Backend.Services.SpotifyService>(client =>
 {
     client.BaseAddress = new Uri("https://api.spotify.com/v1/");
-    // TODO: user agent header for Spotify?
-    // client.DefaultRequestHeaders.UserAgent.ParseAdd("PersonalWebsite-Backend/1.0");
+    client.DefaultRequestHeaders.Authorization = 
+        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+    client.DefaultRequestHeaders.UserAgent.ParseAdd("PersonalWebsite-Backend/1.0");
 });
 
 var app = builder.Build();
