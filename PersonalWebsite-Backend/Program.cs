@@ -1,4 +1,5 @@
 using dotenv.net;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,15 +8,11 @@ var token = Environment.GetEnvironmentVariable("ACCESS_TOKEN");
 
 // Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-// builder.Services.AddEndpointsApiExplorer();
-// builder.Services.AddSwaggerGen();
 
 // Register HttpClient for GithubService with configurations
 builder.Services.AddHttpClient<PersonalWebsite_Backend.Services.GithubService>(client =>
 {
     client.BaseAddress = new Uri("https://api.github.com/");
-    // GitHub API requires a User-Agent header
     client.DefaultRequestHeaders.UserAgent.ParseAdd("PersonalWebsite-Backend/1.0");
 });
 
@@ -30,14 +27,22 @@ builder.Services.AddHttpClient<PersonalWebsite_Backend.Services.SpotifyService>(
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-/*
-if (app.Environment.IsDevelopment())
+// FRONTEND
+// Serve default files like index.html
+app.UseDefaultFiles(new DefaultFilesOptions
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-*/
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "frontend"))
+});
+
+// Serve static files (JS, CSS, etc.)
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "frontend")),
+    RequestPath = ""
+});
+
 
 app.UseHttpsRedirection();
 
