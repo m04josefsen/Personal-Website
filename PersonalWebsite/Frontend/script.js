@@ -1,5 +1,8 @@
-createButtonsForSubjects();
-fetchRepositories();
+// TODO: cache? ratelimits
+document.addEventListener("DOMContentLoaded", (event) => {
+    createButtonsForSubjects();
+    fetchRepositories();
+});
 
 function createButtonsForSubjects() {
   const buttons = document.querySelectorAll('.tabs button');
@@ -18,77 +21,62 @@ function createButtonsForSubjects() {
   });
 }
 
-function fetchRepositories() {
+async function fetchRepositories() {
     const url = `api/github/user/m04josefsen/repositories`;
 
-    fetch(url, {
-        method: "GET",
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Response was not ok");
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log("Data:", data);
-            
-            data.forEach((project) => {
-                createProject(project);
-            })
-            
-        })
-        .catch(error => {
-            console.error("There was an error while fetching data", error);
-        });
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error("Response was not ok");
+        }
+        const data = await response.json();
+        console.log("Data:", data);
+
+        // sequentially wait on each createProject()
+        for (const project of data) {
+            await createProject(project);
+        }
+
+    } catch (error) {
+        console.error("There was an error while fetching data", error);
+    }
 }
 
-function fetchRepositoryLanguage(repository) {
+async function fetchRepositoryLanguage(repository) {
     const username = "m04josefsen";
     const url = `/api/github/user/${username}/repository/${repository}`;
 
     console.log(url);
-    
-    fetch(url, {
-        method: "GET",
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Response was not ok");
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log("Languages:", data);
-            
-            let languages = [];
-            
-            // TODO: fordi det er Langua:linjer
-            
-            data.forEach((language) => {
-                languages.push(language);
-            })
-            
-            return languages;
-        })
-        .catch(error => {
-            console.error("There was an error while fetching data", error);
-        });
+
+    try {
+        const response = await fetch(url, { method: "GET" });
+
+        if (!response.ok) {
+            throw new Error("Response was not ok");
+        }
+
+        const data = await response.json();
+        const languages = Object.keys(data); 
+        console.log("Languages:", data);
+
+        return languages;
+    } catch (error) {
+        console.error("There was an error while fetching data", error);
+        return [];
+    }
 }
 
-function createProject(projectJSON) { 
-    // TODO: send in title som du får fra en annen metode
-    const languages = fetchRepositoryLanguage(projectJSON.name);
+async function createProject(projectJSON) { 
+    const languages = await fetchRepositoryLanguage(projectJSON.name);
     
-    console.log(languages);
+    console.log("i create projects" + languages);
     
-    // TODO: trenger ikke å lage objekt
+    // TODO: trenger ikke å lage objekt, fjerna languages her
     const project = {
         title : projectJSON.name,
         description : projectJSON.description,
         url : projectJSON.url,
-        image : "img/placeholder.jpg",
-        //languages : languages
+        image : "img/placeholder.jpg"
     };
 
     let result = "<div class='project'>";
@@ -96,14 +84,14 @@ function createProject(projectJSON) {
     result += "<h3>" + project.title + "</h3>";
     result += "<p>" + project.description + "</p>";
     result += "<a href='" + project.url + "'><img src='" + project.image + "' alt='" + project.title + "'></a>";
-    /*
+    
     result += "<p>";
     
-    for (let language of project.languages) {
+    for (let language of languages) {
         result += language + " ";
     }
     result += "</p>";
-     */
+    
     result += "</div>";
 
     const container = document.querySelector(".projects"); 

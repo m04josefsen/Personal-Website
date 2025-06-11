@@ -119,7 +119,9 @@ main {
 
 .project h3 {
     text-transform: uppercase;
-    /* Fix height issue on smaller screens with to long names */
+    margin-top: 0;
+    margin-bottom: 0;
+    /* TODO: Fix height issue on smaller screens with to long names */
 }
 
 .project img {
