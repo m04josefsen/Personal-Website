@@ -81,14 +81,15 @@ async function createProject(projectJSON) {
 
     let result = "<div class='project'>";
     
-    result += "<h3>" + project.title + "</h3>";
+    result += "<h3>" + project.title + " •</h3>";
     result += "<p>" + project.description + "</p>";
     result += "<a href='" + project.url + "'><img src='" + project.image + "' alt='" + project.title + "'></a>";
     
     result += "<p>";
     
     for (let language of languages) {
-        result += language + " ";
+        // TODO: om siste språk 
+        result += language + ", ";
     }
     result += "</p>";
     
