@@ -12,6 +12,9 @@ const whitelist = [
     "TXT-BUNDLER",
     "TERMINAL-ANIME-RECOMMENDATION-PROGRAM"
 ];
+
+let projectCount = 0;
+
 function createButtonsForSubjects() {
   const buttons = document.querySelectorAll('.tabs button');
   const sections = document.querySelectorAll('.subjects > div');
@@ -43,6 +46,9 @@ async function fetchRepositories() {
         // sequentially wait on each createProject()
         for (const project of data) {
             await createProject(project);
+            
+            // Maximum 4 projects are shown
+            if(projectCount == 4) break;
         }
 
     } catch (error) {
@@ -77,6 +83,8 @@ async function fetchRepositoryLanguage(repository) {
 async function createProject(projectJSON) {
     // TEMP: only certain repostirores are allowed
     if(!whitelist.includes(projectJSON.name.toUpperCase())) return;
+    
+    projectCount++;
     
     const languages = await fetchRepositoryLanguage(projectJSON.name);
     
