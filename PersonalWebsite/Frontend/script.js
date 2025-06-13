@@ -107,7 +107,7 @@ async function createProject(projectJSON) {
     // Formats languages with , separation, not the last one
     if(languages.length > 0) {
         for (let i = 0; i < languages.length - 1; i++) {
-            result += language + ", ";
+            result += language[i] + ", ";
         }
         result += languages[languages.length - 1];
     }
