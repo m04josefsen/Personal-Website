@@ -4,6 +4,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
     fetchRepositories();
 });
 
+// TEMP: whitelist for subjects
+const whitelist = [
+    "PERSONAL-WEBSITE",
+    "GITHUB-REPOSITORY-STATS",
+    "PROJECT-PAWS",
+    "TXT-BUNDLER",
+    "TERMINAL-ANIME-RECOMMENDATION-PROGRAM"
+];
 function createButtonsForSubjects() {
   const buttons = document.querySelectorAll('.tabs button');
   const sections = document.querySelectorAll('.subjects > div');
@@ -66,10 +74,11 @@ async function fetchRepositoryLanguage(repository) {
     }
 }
 
-async function createProject(projectJSON) { 
-    const languages = await fetchRepositoryLanguage(projectJSON.name);
+async function createProject(projectJSON) {
+    // TEMP: only certain repostirores are allowed
+    if(!whitelist.includes(projectJSON.name.toUpperCase())) return;
     
-    console.log("i create projects" + languages);
+    const languages = await fetchRepositoryLanguage(projectJSON.name);
     
     // TODO: trenger ikke å lage objekt, fjerna languages her
     const project = {
@@ -87,12 +96,15 @@ async function createProject(projectJSON) {
     
     result += "<p>";
     
-    for (let language of languages) {
-        // TODO: om siste språk 
-        result += language + ", ";
+    // Formats languages with , separation, not the last one
+    if(languages.length > 0) {
+        for (let i = 0; i < languges.length - 1; i++) {
+            result += language + ", ";
+        }
+        result += languages[languages.length - 1];
     }
-    result += "</p>";
     
+    result += "</p>";
     result += "</div>";
 
     const container = document.querySelector(".projects"); 
