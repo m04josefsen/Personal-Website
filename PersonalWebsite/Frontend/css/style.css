@@ -157,7 +157,7 @@ main {
 
 /* GitHub Events Section */
 .event {
-    width: 50%;
+    width: 100%;
     padding: 10px;
     box-sizing: border-box;
     border: 2px solid #555;
