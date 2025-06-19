@@ -3,7 +3,11 @@ using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
-DotEnv.Load();
+// Only load if local
+if (builder.Environment.IsDevelopment())
+{
+    DotEnv.Load(); 
+}
 
 // Add services to the container.
 builder.Services.AddControllers();
