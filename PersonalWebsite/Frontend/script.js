@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     createButtonsForSubjects();
     fetchRepositories();
     fetchLatestEvents();
+    fetchCurrentlyPlaying()
 });
 
 // TEMP: whitelist for subjects
@@ -366,103 +367,3 @@ async function createCurrentlyPlaying(JSON) {
         container.innerHTML += result;
     }
 }
-
-/* Currently playing JSON
-    {
-  "context": {
-    "type": "playlist",
-    "href": "https://api.spotify.com/v1/playlists/6VSZOzd42OFTxwFrGrYF4K",
-    "external_urls": {
-      "spotify": "https://open.spotify.com/playlist/6VSZOzd42OFTxwFrGrYF4K"
-    },
-    "uri": "spotify:playlist:6VSZOzd42OFTxwFrGrYF4K"
-  },
-  "timestamp": 1750257286634,
-  "progress_ms": 6267,
-  "is_playing": true,
-  "item": {
-    "album": {
-      "album_type": "single",
-      "total_tracks": 5,
-      "available_markets": ["AR", "AU", "AT", "BE", "BO", "BR", "BG", "CA", "CL", "CO", "CR", "CY", "CZ", "DK", "DO", "DE", "EC", "EE", "SV", "FI", "FR", "GR", "GT", "HN", "HK", "HU", "IS", "IE", "IT", "LV", "LT", "LU", "MY", "MT", "MX", "NL", "NZ", "NI", "NO", "PA", "PY", "PE", "PH", "PL", "PT", "SG", "SK", "ES", "SE", "CH", "TW", "TR", "UY", "US", "GB", "AD", "LI", "MC", "ID", "JP", "TH", "VN", "RO", "IL", "ZA", "SA", "AE", "BH", "QA", "OM", "KW", "EG", "MA", "DZ", "TN", "LB", "JO", "PS", "IN", "BY", "KZ", "MD", "UA", "AL", "BA", "HR", "ME", "MK", "RS", "SI", "KR", "BD", "PK", "LK", "GH", "KE", "NG", "TZ", "UG", "AG", "AM", "BS", "BB", "BZ", "BT", "BW", "BF", "CV", "CW", "DM", "FJ", "GM", "GE", "GD", "GW", "GY", "HT", "JM", "KI", "LS", "LR", "MW", "MV", "ML", "MH", "FM", "NA", "NR", "NE", "PW", "PG", "PR", "WS", "SM", "ST", "SN", "SC", "SL", "SB", "KN", "LC", "VC", "SR", "TL", "TO", "TT", "TV", "VU", "AZ", "BN", "BI", "KH", "CM", "TD", "KM", "GQ", "SZ", "GA", "GN", "KG", "LA", "MO", "MR", "MN", "NP", "RW", "TG", "UZ", "ZW", "BJ", "MG", "MU", "MZ", "AO", "CI", "DJ", "ZM", "CD", "CG", "IQ", "LY", "TJ", "VE", "ET", "XK"],
-      "external_urls": {
-        "spotify": "https://open.spotify.com/album/3lyRrGhXCCMbt4jVO9Wur2"
-      },
-      "href": "https://api.spotify.com/v1/albums/3lyRrGhXCCMbt4jVO9Wur2",
-      "id": "3lyRrGhXCCMbt4jVO9Wur2",
-      "images": [
-        {
-          "url": "https://i.scdn.co/image/ab67616d0000b27386efcf81bf1382daa2d2afe6",
-          "height": 640,
-          "width": 640
-        },
-        {
-          "url": "https://i.scdn.co/image/ab67616d00001e0286efcf81bf1382daa2d2afe6",
-          "height": 300,
-          "width": 300
-        },
-        {
-          "url": "https://i.scdn.co/image/ab67616d0000485186efcf81bf1382daa2d2afe6",
-          "height": 64,
-          "width": 64
-        }
-      ],
-      "name": "HOT",
-      "release_date": "2025-03-14",
-      "release_date_precision": "day",
-      "type": "album",
-      "uri": "spotify:album:3lyRrGhXCCMbt4jVO9Wur2",
-      "artists": [
-        {
-          "external_urls": {
-            "spotify": "https://open.spotify.com/artist/4SpbR6yFEvexJuaBpgAU5p"
-          },
-          "href": "https://api.spotify.com/v1/artists/4SpbR6yFEvexJuaBpgAU5p",
-          "id": "4SpbR6yFEvexJuaBpgAU5p",
-          "name": "LE SSERAFIM",
-          "type": "artist",
-          "uri": "spotify:artist:4SpbR6yFEvexJuaBpgAU5p"
-        }
-      ]
-    },
-    "artists": [
-      {
-        "external_urls": {
-          "spotify": "https://open.spotify.com/artist/4SpbR6yFEvexJuaBpgAU5p"
-        },
-        "href": "https://api.spotify.com/v1/artists/4SpbR6yFEvexJuaBpgAU5p",
-        "id": "4SpbR6yFEvexJuaBpgAU5p",
-        "name": "LE SSERAFIM",
-        "type": "artist",
-        "uri": "spotify:artist:4SpbR6yFEvexJuaBpgAU5p"
-      }
-    ],
-    "available_markets": ["AR", "AU", "AT", "BE", "BO", "BR", "BG", "CA", "CL", "CO", "CR", "CY", "CZ", "DK", "DO", "DE", "EC", "EE", "SV", "FI", "FR", "GR", "GT", "HN", "HK", "HU", "IS", "IE", "IT", "LV", "LT", "LU", "MY", "MT", "MX", "NL", "NZ", "NI", "NO", "PA", "PY", "PE", "PH", "PL", "PT", "SG", "SK", "ES", "SE", "CH", "TW", "TR", "UY", "US", "GB", "AD", "LI", "MC", "ID", "JP", "TH", "VN", "RO", "IL", "ZA", "SA", "AE", "BH", "QA", "OM", "KW", "EG", "MA", "DZ", "TN", "LB", "JO", "PS", "IN", "BY", "KZ", "MD", "UA", "AL", "BA", "HR", "ME", "MK", "RS", "SI", "KR", "BD", "PK", "LK", "GH", "KE", "NG", "TZ", "UG", "AG", "AM", "BS", "BB", "BZ", "BT", "BW", "BF", "CV", "CW", "DM", "FJ", "GM", "GE", "GD", "GW", "GY", "HT", "JM", "KI", "LS", "LR", "MW", "MV", "ML", "MH", "FM", "NA", "NR", "NE", "PW", "PG", "PR", "WS", "SM", "ST", "SN", "SC", "SL", "SB", "KN", "LC", "VC", "SR", "TL", "TO", "TT", "TV", "VU", "AZ", "BN", "BI", "KH", "CM", "TD", "KM", "GQ", "SZ", "GA", "GN", "KG", "LA", "MO", "MR", "MN", "NP", "RW", "TG", "UZ", "ZW", "BJ", "MG", "MU", "MZ", "AO", "CI", "DJ", "ZM", "CD", "CG", "IQ", "LY", "TJ", "VE", "ET", "XK"],
-    "disc_number": 1,
-    "duration_ms": 143797,
-    "explicit": false,
-    "external_ids": {
-      "isrc": "USA2P2506404"
-    },
-    "external_urls": {
-      "spotify": "https://open.spotify.com/track/406IpEtZPvbxApWTGM3twY"
-    },
-    "href": "https://api.spotify.com/v1/tracks/406IpEtZPvbxApWTGM3twY",
-    "id": "406IpEtZPvbxApWTGM3twY",
-    "name": "HOT",
-    "popularity": 81,
-    "preview_url": null,
-    "track_number": 2,
-    "type": "track",
-    "uri": "spotify:track:406IpEtZPvbxApWTGM3twY",
-    "is_local": false
-  },
-  "currently_playing_type": "track",
-  "actions": {
-    "disallows": {
-      "resuming": true
-    }
-  }
-}
-
- */
