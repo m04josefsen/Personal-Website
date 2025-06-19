@@ -309,7 +309,7 @@ async function createPullRequestReviewCommentEvent(event) {
 }
 
 async function fetchCurrentlyPlaying() {
-    const url = `api/spotify/currentlyPlaying`;
+    const url = `api/spotify/currentlyplaying`;
 
     try {
         const response = await fetch(url);
@@ -328,37 +328,35 @@ async function fetchCurrentlyPlaying() {
 async function createCurrentlyPlaying(JSON) {
     // TODO: what if podcast?
     // If no song is playing
-    if(!JSON.is_playing) {
+    if (!JSON.is_playing) {
         let result = "<p>Currently not listening to anything</p>";
 
         const container = document.querySelector(".spotify");
         if (container) {
             container.innerHTML += result;
         }
-        
+
         return;
     }
-    
-    // TODO: arist logo and song logo
-    const song = {
-        name : JSON.item.name,
-        href : JSON.item.external_urls.spotify,
-        artist : JSON.artists.name,
-        artisthref : JSON.item.artsts.external_urls.spotify
-    }
-    
-    // Flex row -> Song logo, song name, artist name under song name, maybe artist Logo?
 
+    const song = {
+        name: JSON.item.name,
+        href: JSON.item.external_urls.spotify,
+        artist: JSON.item.artists[0].name,
+        artisthref: JSON.item.artists[0].external_urls.spotify
+    };
+
+    // TODO: arist logo and song logo
     // TODO: change the events to this style
     // Song container
     result += "<div class='spotify-container'>";
-    result += `<a href='${song.href}'><img src='${song.image}' alt='Song image'></a>`;
+    result += `<a href='${song.href}'><img src='img/placeholder.jpg' alt='Song image'></a>`;
     result += `<a href='${song.href}'><p>${song.name}</p></a>`;
     result += "</div>";
 
     // Artist container
     result += "<div class='spotify-container'>";
-    result += `<a href='${song.artisthref}'><img src='placeholder.png' alt='Artist image'></a>`;
+    result += `<a href='${song.artisthref}'><img src='img/placeholder.jpg' alt='Artist image'></a>`;
     result += `<a href='${song.artisthref}'><p>${song.artist}</p></a>`;
     result += "</div>";
 
