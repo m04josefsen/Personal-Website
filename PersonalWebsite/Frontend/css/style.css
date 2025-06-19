@@ -176,3 +176,14 @@ main {
     margin: 2px 0;
 }
 
+.spotify-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.spotify-container img {
+    height: 3rem;
+    width: 3rem;
+    object-fit: cover;
+}
+

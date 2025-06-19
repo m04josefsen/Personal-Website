@@ -306,3 +306,163 @@ async function createPullRequestReviewCommentEvent(event) {
 
     appendToEvents(result);
 }
+
+async function fetchCurrentlyPlaying() {
+    const url = `api/spotify/currentlyPlaying`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error("Response was not ok");
+        }
+        const data = await response.json();
+        console.log("Data:", data);
+
+        await createCurrentlyPlaying(data);
+    } catch (error) {
+        console.error("There was an error while fetching data", error);
+    }
+}
+
+async function createCurrentlyPlaying(JSON) {
+    // TODO: what if podcast?
+    // If no song is playing
+    if(!JSON.is_playing) {
+        let result = "<p>Currently not listening to anything</p>";
+
+        const container = document.querySelector(".spotify");
+        if (container) {
+            container.innerHTML += result;
+        }
+        
+        return;
+    }
+    
+    // TODO: arist logo and song logo
+    const song = {
+        name : JSON.item.name,
+        href : JSON.item.external_urls.spotify,
+        artist : JSON.artists.name,
+        artisthref : JSON.item.artsts.external_urls.spotify
+    }
+    
+    // Flex row -> Song logo, song name, artist name under song name, maybe artist Logo?
+
+    // TODO: change the events to this style
+    // Song container
+    result += "<div class='spotify-container'>";
+    result += `<a href='${song.href}'><img src='${song.image}' alt='Song image'></a>`;
+    result += `<a href='${song.href}'><p>${song.name}</p></a>`;
+    result += "</div>";
+
+    // Artist container
+    result += "<div class='spotify-container'>";
+    result += `<a href='${song.artisthref}'><img src='placeholder.png' alt='Artist image'></a>`;
+    result += `<a href='${song.artisthref}'><p>${song.artist}</p></a>`;
+    result += "</div>";
+
+    const container = document.querySelector(".spotify");
+    if (container) {
+        container.innerHTML += result;
+    }
+}
+
+/* Currently playing JSON
+    {
+  "context": {
+    "type": "playlist",
+    "href": "https://api.spotify.com/v1/playlists/6VSZOzd42OFTxwFrGrYF4K",
+    "external_urls": {
+      "spotify": "https://open.spotify.com/playlist/6VSZOzd42OFTxwFrGrYF4K"
+    },
+    "uri": "spotify:playlist:6VSZOzd42OFTxwFrGrYF4K"
+  },
+  "timestamp": 1750257286634,
+  "progress_ms": 6267,
+  "is_playing": true,
+  "item": {
+    "album": {
+      "album_type": "single",
+      "total_tracks": 5,
+      "available_markets": ["AR", "AU", "AT", "BE", "BO", "BR", "BG", "CA", "CL", "CO", "CR", "CY", "CZ", "DK", "DO", "DE", "EC", "EE", "SV", "FI", "FR", "GR", "GT", "HN", "HK", "HU", "IS", "IE", "IT", "LV", "LT", "LU", "MY", "MT", "MX", "NL", "NZ", "NI", "NO", "PA", "PY", "PE", "PH", "PL", "PT", "SG", "SK", "ES", "SE", "CH", "TW", "TR", "UY", "US", "GB", "AD", "LI", "MC", "ID", "JP", "TH", "VN", "RO", "IL", "ZA", "SA", "AE", "BH", "QA", "OM", "KW", "EG", "MA", "DZ", "TN", "LB", "JO", "PS", "IN", "BY", "KZ", "MD", "UA", "AL", "BA", "HR", "ME", "MK", "RS", "SI", "KR", "BD", "PK", "LK", "GH", "KE", "NG", "TZ", "UG", "AG", "AM", "BS", "BB", "BZ", "BT", "BW", "BF", "CV", "CW", "DM", "FJ", "GM", "GE", "GD", "GW", "GY", "HT", "JM", "KI", "LS", "LR", "MW", "MV", "ML", "MH", "FM", "NA", "NR", "NE", "PW", "PG", "PR", "WS", "SM", "ST", "SN", "SC", "SL", "SB", "KN", "LC", "VC", "SR", "TL", "TO", "TT", "TV", "VU", "AZ", "BN", "BI", "KH", "CM", "TD", "KM", "GQ", "SZ", "GA", "GN", "KG", "LA", "MO", "MR", "MN", "NP", "RW", "TG", "UZ", "ZW", "BJ", "MG", "MU", "MZ", "AO", "CI", "DJ", "ZM", "CD", "CG", "IQ", "LY", "TJ", "VE", "ET", "XK"],
+      "external_urls": {
+        "spotify": "https://open.spotify.com/album/3lyRrGhXCCMbt4jVO9Wur2"
+      },
+      "href": "https://api.spotify.com/v1/albums/3lyRrGhXCCMbt4jVO9Wur2",
+      "id": "3lyRrGhXCCMbt4jVO9Wur2",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab67616d0000b27386efcf81bf1382daa2d2afe6",
+          "height": 640,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/ab67616d00001e0286efcf81bf1382daa2d2afe6",
+          "height": 300,
+          "width": 300
+        },
+        {
+          "url": "https://i.scdn.co/image/ab67616d0000485186efcf81bf1382daa2d2afe6",
+          "height": 64,
+          "width": 64
+        }
+      ],
+      "name": "HOT",
+      "release_date": "2025-03-14",
+      "release_date_precision": "day",
+      "type": "album",
+      "uri": "spotify:album:3lyRrGhXCCMbt4jVO9Wur2",
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/4SpbR6yFEvexJuaBpgAU5p"
+          },
+          "href": "https://api.spotify.com/v1/artists/4SpbR6yFEvexJuaBpgAU5p",
+          "id": "4SpbR6yFEvexJuaBpgAU5p",
+          "name": "LE SSERAFIM",
+          "type": "artist",
+          "uri": "spotify:artist:4SpbR6yFEvexJuaBpgAU5p"
+        }
+      ]
+    },
+    "artists": [
+      {
+        "external_urls": {
+          "spotify": "https://open.spotify.com/artist/4SpbR6yFEvexJuaBpgAU5p"
+        },
+        "href": "https://api.spotify.com/v1/artists/4SpbR6yFEvexJuaBpgAU5p",
+        "id": "4SpbR6yFEvexJuaBpgAU5p",
+        "name": "LE SSERAFIM",
+        "type": "artist",
+        "uri": "spotify:artist:4SpbR6yFEvexJuaBpgAU5p"
+      }
+    ],
+    "available_markets": ["AR", "AU", "AT", "BE", "BO", "BR", "BG", "CA", "CL", "CO", "CR", "CY", "CZ", "DK", "DO", "DE", "EC", "EE", "SV", "FI", "FR", "GR", "GT", "HN", "HK", "HU", "IS", "IE", "IT", "LV", "LT", "LU", "MY", "MT", "MX", "NL", "NZ", "NI", "NO", "PA", "PY", "PE", "PH", "PL", "PT", "SG", "SK", "ES", "SE", "CH", "TW", "TR", "UY", "US", "GB", "AD", "LI", "MC", "ID", "JP", "TH", "VN", "RO", "IL", "ZA", "SA", "AE", "BH", "QA", "OM", "KW", "EG", "MA", "DZ", "TN", "LB", "JO", "PS", "IN", "BY", "KZ", "MD", "UA", "AL", "BA", "HR", "ME", "MK", "RS", "SI", "KR", "BD", "PK", "LK", "GH", "KE", "NG", "TZ", "UG", "AG", "AM", "BS", "BB", "BZ", "BT", "BW", "BF", "CV", "CW", "DM", "FJ", "GM", "GE", "GD", "GW", "GY", "HT", "JM", "KI", "LS", "LR", "MW", "MV", "ML", "MH", "FM", "NA", "NR", "NE", "PW", "PG", "PR", "WS", "SM", "ST", "SN", "SC", "SL", "SB", "KN", "LC", "VC", "SR", "TL", "TO", "TT", "TV", "VU", "AZ", "BN", "BI", "KH", "CM", "TD", "KM", "GQ", "SZ", "GA", "GN", "KG", "LA", "MO", "MR", "MN", "NP", "RW", "TG", "UZ", "ZW", "BJ", "MG", "MU", "MZ", "AO", "CI", "DJ", "ZM", "CD", "CG", "IQ", "LY", "TJ", "VE", "ET", "XK"],
+    "disc_number": 1,
+    "duration_ms": 143797,
+    "explicit": false,
+    "external_ids": {
+      "isrc": "USA2P2506404"
+    },
+    "external_urls": {
+      "spotify": "https://open.spotify.com/track/406IpEtZPvbxApWTGM3twY"
+    },
+    "href": "https://api.spotify.com/v1/tracks/406IpEtZPvbxApWTGM3twY",
+    "id": "406IpEtZPvbxApWTGM3twY",
+    "name": "HOT",
+    "popularity": 81,
+    "preview_url": null,
+    "track_number": 2,
+    "type": "track",
+    "uri": "spotify:track:406IpEtZPvbxApWTGM3twY",
+    "is_local": false
+  },
+  "currently_playing_type": "track",
+  "actions": {
+    "disallows": {
+      "resuming": true
+    }
+  }
+}
+
+ */

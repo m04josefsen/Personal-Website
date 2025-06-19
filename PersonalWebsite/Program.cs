@@ -4,7 +4,6 @@ using Microsoft.Extensions.FileProviders;
 var builder = WebApplication.CreateBuilder(args);
 
 DotEnv.Load();
-var token = Environment.GetEnvironmentVariable("ACCESS_TOKEN");
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -20,8 +19,6 @@ builder.Services.AddHttpClient<PersonalWebsite.Services.GithubService>(client =>
 builder.Services.AddHttpClient<PersonalWebsite.Services.SpotifyService>(client =>
 {
     client.BaseAddress = new Uri("https://api.spotify.com/v1/");
-    client.DefaultRequestHeaders.Authorization = 
-        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
     client.DefaultRequestHeaders.UserAgent.ParseAdd("PersonalWebsite/1.0");
 });
 
