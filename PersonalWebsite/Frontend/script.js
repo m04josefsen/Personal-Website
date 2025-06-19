@@ -329,11 +329,9 @@ async function createCurrentlyPlaying(JSON) {
     // TODO: what if podcast?
     // If no song is playing
     if (!JSON.is_playing) {
-        let result = "<p>Currently not listening to anything</p>";
-
         const container = document.querySelector(".spotify");
         if (container) {
-            container.innerHTML += result;
+            container.innerHTML += "<p>Currently not listening to anything</p>";;
         }
 
         return;
@@ -349,7 +347,7 @@ async function createCurrentlyPlaying(JSON) {
     // TODO: arist logo and song logo
     // TODO: change the events to this style
     // Song container
-    result += "<div class='spotify-container'>";
+    let result = "<div class='spotify-container'>";
     result += `<a href='${song.href}'><img src='img/placeholder.jpg' alt='Song image'></a>`;
     result += `<a href='${song.href}'><p>${song.name}</p></a>`;
     result += "</div>";
