@@ -43,7 +43,7 @@ async function fetchRepositories() {
             throw new Error("Response was not ok");
         }
         const data = await response.json();
-        console.log("Data:", data);
+        // console.log("Data:", data);
 
         // sequentially wait on each createProject()
         for (const project of data) {
@@ -62,7 +62,7 @@ async function fetchRepositoryLanguage(repository) {
     const username = "m04josefsen";
     const url = `/api/github/user/${username}/repository/${repository}`;
 
-    console.log(url);
+    // console.log(url);
 
     try {
         const response = await fetch(url, { method: "GET" });
@@ -73,7 +73,7 @@ async function fetchRepositoryLanguage(repository) {
 
         const data = await response.json();
         const languages = Object.keys(data); 
-        console.log("Languages:", data);
+        // console.log("Languages:", data);
 
         return languages;
     } catch (error) {
@@ -99,12 +99,12 @@ async function createProject(projectJSON) {
     };
 
     let result = "<div class='project'>";
-    
-    result += "<h3>" + project.title + " •</h3>";
-    result += "<p>" + project.description + "</p>";
-    result += "<a href='" + project.url + "'><img src='" + project.image + "' alt='" + project.title + "'></a>";
-    
-    result += "<p>";
+
+    result += `<h3>${project.title} •</h3>`;
+    result += `<p>${project.description}</p>`;
+    result += `<a href='${project.url}'><img src='${project.image}' alt='${project.title}'></a>`;
+
+    result += `<p>`;
     
     // Formats languages with , separation, not the last one
     if(languages.length > 0) {
@@ -124,7 +124,7 @@ async function fetchLatestEvents() {
     const username = "m04josefsen";
     const url = `/api/github/user/${username}/events`;
 
-    console.log(url);
+    // console.log(url);
 
     try {
         const response = await fetch(url, { method: "GET" });
@@ -134,7 +134,7 @@ async function fetchLatestEvents() {
         }
 
         const data = await response.json();
-        console.log("Data:", data);
+        // console.log("Data:", data);
         
         await createEvents(data);
     } catch (error) {
@@ -194,11 +194,11 @@ function appendToEvents(html) {
 
 async function createPushEvent(event) {
     let result = "<div class='event'>";
-    result += "<h3>Push Event — <a href='https://github.com/" + event.repo.name + "'>" + event.repo.name + "</a></h3>";
+    result += `<h3>Push Event — <a href='https://github.com/${event.repo.name}'>${event.repo.name}</a></h3>`;
     event.payload.commits.forEach(commit => {
-        result += "<p>Commit: <a href='https://github.com/" + event.repo.name + "/commit/" + commit.sha + "'>" + commit.message + "</a></p>";
+        result += `<p>Commit: <a href='https://github.com/${event.repo.name}/commit/${commit.sha}'>${commit.message}</a></p>`;
     });
-    result += "<p class='date'>" + new Date(event.created_at).toLocaleString() + "</p>";
+    result += `<p class='date'>${new Date(event.created_at).toLocaleString()}</p>`;
     result += "</div>";
 
     appendToEvents(result);
@@ -208,9 +208,9 @@ async function createPullRequestEvent(event) {
     const pr = event.payload.pull_request;
 
     let result = "<div class='event'>";
-    result += "<h3>Pull Request " + event.payload.action + " — <a href='https://github.com/" + event.repo.name + "'>" + event.repo.name + "</a></h3>";
-    result += "<p><a href='" + pr.html_url + "'>" + pr.title + "</a></p>";
-    result += "<p class='date'>" + new Date(event.created_at).toLocaleString() + "</p>";
+    result += `<h3>Pull Request ${event.payload.action} — <a href='https://github.com/${event.repo.name}'>${event.repo.name}</a></h3>`;
+    result += `<p><a href='${pr.html_url}'>${pr.title}</a></p>`;
+    result += `<p class='date'>${new Date(event.created_at).toLocaleString()}</p>`;
     result += "</div>";
 
     appendToEvents(result);
@@ -221,10 +221,10 @@ async function createIssueCommentEvent(event) {
     const comment = event.payload.comment;
 
     let result = "<div class='event'>";
-    result += "<h3>Issue Comment — <a href='https://github.com/" + event.repo.name + "'>" + event.repo.name + "</a></h3>";
-    result += "<p>On Issue: <a href='" + issue.html_url + "'>" + issue.title + "</a></p>";
-    result += "<p>Comment: <a href='" + comment.html_url + "'>" + comment.body + "</a></p>";
-    result += "<p class='date'>" + new Date(event.created_at).toLocaleString() + "</p>";
+    result += `<h3>Issue Comment — <a href='https://github.com/${event.repo.name}'>${event.repo.name}</a></h3>`;
+    result += `<p>On Issue: <a href='${issue.html_url}'>${issue.title}</a></p>`;
+    result += `<p>Comment: <a href='${comment.html_url}'>${comment.body}</a></p>`;
+    result += `<p class='date'>${new Date(event.created_at).toLocaleString()}</p>`;
     result += "</div>";
 
     appendToEvents(result);
@@ -234,9 +234,9 @@ async function createIssuesEvent(event) {
     const issue = event.payload.issue;
 
     let result = "<div class='event'>";
-    result += "<h3>Issue " + event.payload.action + " — <a href='https://github.com/" + event.repo.name + "'>" + event.repo.name + "</a></h3>";
-    result += "<p><a href='" + issue.html_url + "'>" + issue.title + "</a></p>";
-    result += "<p class='date'>" + new Date(event.created_at).toLocaleString() + "</p>";
+    result += `<h3>Issue ${event.payload.action} — <a href='https://github.com/${event.repo.name}'>${event.repo.name}</a></h3>`;
+    result += `<p><a href='${issue.html_url}'>${issue.title}</a></p>`;
+    result += `<p class='date'>${new Date(event.created_at).toLocaleString()}</p>`;
     result += "</div>";
 
     appendToEvents(result);
@@ -244,8 +244,8 @@ async function createIssuesEvent(event) {
 
 async function createWatchEvent(event) {
     let result = "<div class='event'>";
-    result += "<h3>Starred Repository — <a href='https://github.com/" + event.repo.name + "'>" + event.repo.name + "</a></h3>";
-    result += "<p class='date'>" + new Date(event.created_at).toLocaleString() + "</p>";
+    result += `<h3>Starred Repository — <a href='https://github.com/${event.repo.name}'>${event.repo.name}</a></h3>`;
+    result += `<p class='date'>${new Date(event.created_at).toLocaleString()}</p>`;
     result += "</div>";
 
     appendToEvents(result);
@@ -255,9 +255,9 @@ async function createForkEvent(event) {
     const fork = event.payload.forkee;
 
     let result = "<div class='event'>";
-    result += "<h3>Forked Repository — <a href='https://github.com/" + event.repo.name + "'>" + event.repo.name + "</a></h3>";
-    result += "<p>Fork: <a href='" + fork.html_url + "'>" + fork.full_name + "</a></p>";
-    result += "<p class='date'>" + new Date(event.created_at).toLocaleString() + "</p>";
+    result += `<h3>Forked Repository — <a href='https://github.com/${event.repo.name}'>${event.repo.name}</a></h3>`;
+    result += `<p>Fork: <a href='${fork.html_url}'>${fork.full_name}</a></p>`;
+    result += `<p class='date'>${new Date(event.created_at).toLocaleString()}</p>`;
     result += "</div>";
 
     appendToEvents(result);
@@ -265,11 +265,11 @@ async function createForkEvent(event) {
 
 async function createCreateEvent(event) {
     let result = "<div class='event'>";
-    result += "<h3>Created " + event.payload.ref_type + " — <a href='https://github.com/" + event.repo.name + "'>" + event.repo.name + "</a></h3>";
+    result += `<h3>Created ${event.payload.ref_type} — <a href='https://github.com/${event.repo.name}'>${event.repo.name}</a></h3>`;
     if (event.payload.ref) {
-        result += "<p>Ref Name: " + event.payload.ref + "</p>";
+        result += `<p>Ref Name: ${event.payload.ref}</p>`;
     }
-    result += "<p class='date'>" + new Date(event.created_at).toLocaleString() + "</p>";
+    result += `<p class='date'>${new Date(event.created_at).toLocaleString()}</p>`;
     result += "</div>";
 
     appendToEvents(result);
@@ -277,9 +277,9 @@ async function createCreateEvent(event) {
 
 async function createDeleteEvent(event) {
     let result = "<div class='event'>";
-    result += "<h3>Deleted " + event.payload.ref_type + " — <a href='https://github.com/" + event.repo.name + "'>" + event.repo.name + "</a></h3>";
-    result += "<p>Ref Name: " + event.payload.ref + "</p>";
-    result += "<p class='date'>" + new Date(event.created_at).toLocaleString() + "</p>";
+    result += `<h3>Deleted ${event.payload.ref_type} — <a href='https://github.com/${event.repo.name}'>${event.repo.name}</a></h3>`;
+    result += `<p>Ref Name: ${event.payload.ref}</p>`;
+    result += `<p class='date'>${new Date(event.created_at).toLocaleString()}</p>`;
     result += "</div>";
 
     appendToEvents(result);
@@ -287,8 +287,8 @@ async function createDeleteEvent(event) {
 
 async function createPublicEvent(event) {
     let result = "<div class='event'>";
-    result += "<h3>Made Public — <a href='https://github.com/" + event.repo.name + "'>" + event.repo.name + "</a></h3>";
-    result += "<p class='date'>" + new Date(event.created_at).toLocaleString() + "</p>";
+    result += `<h3>Made Public — <a href='https://github.com/${event.repo.name}'>${event.repo.name}</a></h3>`;
+    result += `<p class='date'>${new Date(event.created_at).toLocaleString()}</p>`;
     result += "</div>";
 
     appendToEvents(result);
@@ -299,10 +299,10 @@ async function createPullRequestReviewCommentEvent(event) {
     const comment = event.payload.comment;
 
     let result = "<div class='event'>";
-    result += "<h3>PR Review Comment — <a href='https://github.com/" + event.repo.name + "'>" + event.repo.name + "</a></h3>";
-    result += "<p>PR: <a href='" + pr.html_url + "'>" + pr.title + "</a></p>";
-    result += "<p>Comment: <a href='" + comment.html_url + "'>" + comment.body + "</a></p>";
-    result += "<p class='date'>" + new Date(event.created_at).toLocaleString() + "</p>";
+    result += `<h3>PR Review Comment — <a href='https://github.com/${event.repo.name}'>${event.repo.name}</a></h3>`;
+    result += `<p>PR: <a href='${pr.html_url}'>${pr.title}</a></p>`;
+    result += `<p>Comment: <a href='${comment.html_url}'>${comment.body}</a></p>`;
+    result += `<p class='date'>${new Date(event.created_at).toLocaleString()}</p>`;
     result += "</div>";
 
     appendToEvents(result);
@@ -317,7 +317,7 @@ async function fetchCurrentlyPlaying() {
             throw new Error("Response was not ok");
         }
         const data = await response.json();
-        console.log("Data:", data);
+        // console.log("Data:", data);
 
         await createCurrentlyPlaying(data);
     } catch (error) {
@@ -331,7 +331,7 @@ async function createCurrentlyPlaying(JSON) {
     if (!JSON.is_playing) {
         const container = document.querySelector(".spotify");
         if (container) {
-            container.innerHTML += "<p>Currently not listening to anything</p>";;
+            container.innerHTML += "<p>Nothing</p>";;
         }
 
         return;
@@ -345,21 +345,14 @@ async function createCurrentlyPlaying(JSON) {
     };
 
     // TODO: arist logo and song logo
-    // TODO: change the events to this style
-    // Song container
-    let result = "<div class='spotify-container'>";
-    result += `<a href='${song.href}'><img src='img/placeholder.jpg' alt='Song image'></a>`;
-    result += `<a href='${song.href}'><p>${song.name}</p></a>`;
-    result += "</div>";
-
-    // Artist container
-    result += "<div class='spotify-container'>";
-    result += `<a href='${song.artisthref}'><img src='img/placeholder.jpg' alt='Artist image'></a>`;
-    result += `<a href='${song.artisthref}'><p>${song.artist}</p></a>`;
+    let result = "<div class='spotify-entry'>";
+    result += `<a href='${song.href}' class='song-info'>
+              <img src='img/placeholder.jpg' alt='Song image'>
+              <p class='song-name'>${song.name}</p>
+           </a>`;
+    result += `<a href='${song.artisthref}' class='artist-name'>${song.artist}</a>`;
     result += "</div>";
 
     const container = document.querySelector(".spotify");
-    if (container) {
-        container.innerHTML += result;
-    }
+    container.innerHTML = result;
 }

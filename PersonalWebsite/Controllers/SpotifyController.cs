@@ -34,18 +34,17 @@ public class SpotifyController : ControllerBase
             if (userDataJson != null)
             {
                 // The Spotify returns JSON, we forward
-                // TODO: format data
                 return Content(userDataJson, "application/json");
             }
             else
             {
-                _logger.LogInformation("TODO: ");
+                // _logger.LogInformation("");
                 return NotFound("No data available");
             }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error while processing request for Fetching Currently Playing Song");
+            // _logger.LogError(ex, "Error while processing request for Fetching Currently Playing Song");
             return StatusCode(StatusCodes.Status500InternalServerError, "Error occurred. Please try again later.");
         }
     }

@@ -176,14 +176,76 @@ main {
     margin: 2px 0;
 }
 
-.spotify-container {
-    display: flex;
-    flex-direction: row;
+/* Spotify / Currently Listening to */
+
+.spotify-header {
+    font-size: 1.5rem;
 }
 
-.spotify-container img {
+.spotify-entry {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-family: sans-serif;
+}
+
+.song-info {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    gap: 1rem;
+}
+
+.song-info img {
     height: 3rem;
     width: 3rem;
     object-fit: cover;
+    border-radius: 0.25rem;
 }
 
+.song-name {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.artist-name {
+    font-size: 0.85rem;
+    color: gray;
+    text-decoration: none;
+    margin-left: 4rem;
+}
+
+@media (max-width: 750px) {
+    body {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+    
+    .tabs {
+        flex-direction: column;
+    }
+    
+    .projects {
+        flex-direction: column;
+    }
+    
+    .project {
+        width: 100%;
+    }
+    
+    /* Removes grayscaling and on hover effect */
+    .project img {
+        filter: grayscale(0%);
+        transition: none;
+        transform: none;
+    }
+
+    .project img:hover {
+        filter: grayscale(0%);
+        transform: none;
+    }
+}
