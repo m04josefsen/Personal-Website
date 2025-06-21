@@ -32,13 +32,13 @@ namespace PersonalWebsite.Controllers
         {
             if (string.IsNullOrWhiteSpace(username))
             {
-                _logger.LogWarning("GetGithubUserInformation called with empty username.");
+                // _logger.LogWarning("GetGithubUserInformation called with empty username.");
                 return BadRequest("Username must be provided.");
             }
 
             try
             {
-                _logger.LogInformation("Processing request for GitHub user: {Username}", username);
+                // _logger.LogInformation("Processing request for GitHub user: {Username}", username);
                 // Await the call to the asynchronous service method
                 var userDataJson = await _githubService.GetUserAsync(username);
 
@@ -49,18 +49,17 @@ namespace PersonalWebsite.Controllers
                 }
                 else
                 {
-                    _logger.LogInformation("GitHub user {Username} not found or error during service call.", username);
+                    // _logger.LogInformation("GitHub user {Username} not found or error during service call.", username);
                     return NotFound($"Information for GitHub user '{username}' could not be found or retrieved.");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error while processing request for GitHub user {Username}.", username);
+                // _logger.LogError(ex, "Error while processing request for GitHub user {Username}.", username);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error occurred. Please try again later.");
             }
         }
         
-        // TODO: repo object og sende som array?
         // api/github/user/{username}/repositories
         [HttpGet("user/{username}/repositories")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)] 
@@ -71,13 +70,13 @@ namespace PersonalWebsite.Controllers
         {
             if (string.IsNullOrWhiteSpace(username))
             {
-                _logger.LogWarning("GetGithubUserRepositories called with empty username.");
+                // _logger.LogWarning("GetGithubUserRepositories called with empty username.");
                 return BadRequest("Username must be provided.");
             }
 
             try
             {
-                _logger.LogInformation("Processing request for GitHub user: {Username}", username);
+                // _logger.LogInformation("Processing request for GitHub user: {Username}", username);
                 // Await the call to the asynchronous service method
                 var userDataJson = await _githubService.GetRepositoriesAsync(username);
 
@@ -88,13 +87,13 @@ namespace PersonalWebsite.Controllers
                 }
                 else
                 {
-                    _logger.LogInformation("GitHub user {Username} not found or error during service call.", username);
+                    // _logger.LogInformation("GitHub user {Username} not found or error during service call.", username);
                     return NotFound($"Information for GitHub user '{username}' could not be found or retrieved.");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error while processing request for GitHub user {Username}.", username);
+                // _logger.LogError(ex, "Error while processing request for GitHub user {Username}.", username);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error occurred. Please try again later.");
             }
         }
@@ -110,20 +109,19 @@ namespace PersonalWebsite.Controllers
         {
             if (string.IsNullOrWhiteSpace(username))
             {
-                _logger.LogWarning("GetLanguesForRepository called with empty username.");
+                // _logger.LogWarning("GetLanguesForRepository called with empty username.");
                 return BadRequest("Username must be provided.");
             }
             
             if (string.IsNullOrWhiteSpace(repository))
             {
-                _logger.LogWarning("GetLanguesForRepository called with empty repository.");
+                // _logger.LogWarning("GetLanguesForRepository called with empty repository.");
                 return BadRequest("Username must be provided.");
             }
 
             try
             {
-                // TODO: for mange logs?
-                // _logger.LogInformation("Processing request for GitHub user: {Username}", username);
+                // // _logger.LogInformation("Processing request for GitHub user: {Username}", username);
                 // Await the call to the asynchronous service method
                 var userDataJson = await _githubService.GetRepositoryLanguagesAsync(username, repository);
 
@@ -134,14 +132,13 @@ namespace PersonalWebsite.Controllers
                 }
                 else
                 {
-                    // TODO: for mang elogs?
-                    // _logger.LogInformation("GitHub user {Username} not found or error during service call.", username);
+                    // // _logger.LogInformation("GitHub user {Username} not found or error during service call.", username);
                     return NotFound($"Information for GitHub user '{username}' could not be found or retrieved.");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error while processing request for Languges for repository");
+                // _logger.LogError(ex, "Error while processing request for Languges for repository");
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error occurred. Please try again later.");
             }
         }
@@ -156,14 +153,13 @@ namespace PersonalWebsite.Controllers
         {
             if (string.IsNullOrWhiteSpace(username))
             {
-                _logger.LogWarning("GetLatestEvents called with empty username.");
+                // _logger.LogWarning("GetLatestEvents called with empty username.");
                 return BadRequest("Username must be provided.");
             }
 
             try
             {
-                // TODO: for mange logs?
-                // _logger.LogInformation("Processing request for GitHub user: {Username}", username);
+                // // _logger.LogInformation("Processing request for GitHub user: {Username}", username);
                 // Await the call to the asynchronous service method
                 var userDataJson = await _githubService.GetLatestEventsAsync(username);
 
@@ -174,14 +170,13 @@ namespace PersonalWebsite.Controllers
                 }
                 else
                 {
-                    // TODO: for mang elogs?
-                    // _logger.LogInformation("GitHub user {Username} not found or error during service call.", username);
+                    // // _logger.LogInformation("GitHub user {Username} not found or error during service call.", username);
                     return NotFound($"Information for GitHub user '{username}' could not be found or retrieved.");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error while processing request for Languges for repository");
+                // _logger.LogError(ex, "Error while processing request for Languges for repository");
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error occurred. Please try again later.");
             }
         }

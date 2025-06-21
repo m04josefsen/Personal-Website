@@ -28,14 +28,14 @@ public class SpotifyService
     
     public async Task<string?> GetCurrentlyPlayingAsync()
     {
-        _logger.LogInformation("Attempting to fetch Currently Playing Song");
+        // _logger.LogInformation("Attempting to fetch Currently Playing Song");
 
         try
         {
             var accessToken = await GetAccessTokenFromRefreshTokenAsync();
             if (string.IsNullOrWhiteSpace(accessToken))
             {
-                _logger.LogError("Could not retrieve access token");
+                // _logger.LogError("Could not retrieve access token");
                 return null;
             }
 
@@ -46,27 +46,29 @@ public class SpotifyService
 
             if (response.StatusCode == HttpStatusCode.NoContent)
             {
-                _logger.LogInformation("User is not currently playing anything.");
+                // _logger.LogInformation("User is not currently playing anything.");
                 return null;
             }
 
             if (response.IsSuccessStatusCode)
             {
                 var data = await response.Content.ReadAsStringAsync();
-                _logger.LogInformation("Successfully fetched Currently Playing Song");
+                // _logger.LogInformation("Successfully fetched Currently Playing Song");
                 return data;
             }
             else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-                _logger.LogWarning("Failed to fetch Currently Playing Song. Status Code: {StatusCode}. Response: {ErrorResponse}",
+                /* _logger.LogWarning("Failed to fetch Currently Playing Song. Status Code: {StatusCode}. Response: {ErrorResponse}",
                     response.StatusCode, errorContent);
+                    */
+                
                 return null;
             }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An unexpected error occurred while fetching Currently Playing Song");
+            // _logger.LogError(ex, "An unexpected error occurred while fetching Currently Playing Song");
             return null;
         }
     }
@@ -97,7 +99,7 @@ public class SpotifyService
         if (!response.IsSuccessStatusCode)
         {
             var err = await response.Content.ReadAsStringAsync();
-            _logger.LogError("Failed to refresh token. Status: {Status}. Error: {Err}", response.StatusCode, err);
+            // _logger.LogError("Failed to refresh token. Status: {Status}. Error: {Err}", response.StatusCode, err);
             return null;
         }
 
