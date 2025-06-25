@@ -1,15 +1,19 @@
 body {
-    background-color: #FEF9FC;
+    /* background-color: #FEF9FC; */
+    background-color: #ffffff;
     color: #21121B;
     margin: 0;
     line-height: 150%;
     /* font: 1.5rem PP Neue Montreal, sans-serif; */
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-family: var(--default-font-family, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
-    padding-left: 10%;
-    padding-right: 10%;
+    /*
+    padding-left: 25%;
+    padding-right: 25%;
+     */
 }
 
+/* Header settings */
 header {
     display: flex;
     flex-direction: row;
@@ -21,6 +25,11 @@ header div {
     flex-direction: row;
     align-items: center;
     gap: 2rem;
+}
+
+.left-header, .links-header {
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 .left-header img {
@@ -39,11 +48,24 @@ header div {
     width: 3rem;
 }
 
+hr {
+    border: 1px solid #A49AA0;
+}
+
+/* Main page content */
 main {
-    /*
     padding-left: 20%;
     padding-right: 20%;
-    */
+}
+
+.tldr h2 {
+    text-align: center;
+}
+
+.tldr p {
+    font-size: 1.2rem;
+    padding-left: 15%;
+    padding-right: 15%;
 }
 
 /* Subject part */
@@ -144,11 +166,6 @@ main {
     margin: 0;
 }
 
-.rights {
-    font-size: 1rem;
-    color: #A49AA0
-}
-
 .gray-text {
     font-size: 0.8rem;
     color: #A49AA0;
@@ -217,6 +234,12 @@ main {
     color: gray;
     text-decoration: none;
     margin-left: 4rem;
+}
+
+.rights {
+    font-size: 1rem;
+    color: #A49AA0;
+    text-align: center;
 }
 
 @media (max-width: 750px) {

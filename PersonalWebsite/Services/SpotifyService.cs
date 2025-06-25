@@ -20,7 +20,6 @@ public class SpotifyService
         }
         if (!_httpClient.DefaultRequestHeaders.UserAgent.Any())
         {
-            // TODO: User agent for spotify?
             // User-Agent header for Github API
             _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("PersonalWebsite/1.0");
         }
