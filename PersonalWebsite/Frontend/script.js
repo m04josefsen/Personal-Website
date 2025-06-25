@@ -340,6 +340,7 @@ async function createCurrentlyPlaying(JSON) {
     const song = {
         name: JSON.item.name,
         href: JSON.item.external_urls.spotify,
+        albumCover: JSON.item.album.images[0].url,
         artist: JSON.item.artists[0].name,
         artisthref: JSON.item.artists[0].external_urls.spotify
     };
@@ -347,7 +348,7 @@ async function createCurrentlyPlaying(JSON) {
     // TODO: arist logo and song logo
     let result = "<div class='spotify-entry'>";
     result += `<a href='${song.href}' target='_blank' class='song-info'>
-              <img src='img/placeholder.jpg' alt='Song image'>
+              <img src='${song.albumCover}' alt='Song image'>
               <p class='song-name'>${song.name}</p>
            </a>`;
     result += `<a href='${song.artisthref}' target='_blank' class='artist-name'>${song.artist}</a>`;
