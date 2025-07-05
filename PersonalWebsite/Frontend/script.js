@@ -9,10 +9,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
 // TEMP: whitelist for subjects
 const whitelist = [
     "PERSONAL-WEBSITE",
-    "GITHUB-REPOSITORY-STATS",
-    "PROJECT-PAWS",
+    //"GITHUB-REPOSITORY-STATS",
+    //"PROJECT-PAWS",
     "TXT-BUNDLER",
-    "TERMINAL-ANIME-RECOMMENDATION-PROGRAM"
+    "TERMINAL-ANIME-RECOMMENDATION-PROGRAM",
+    "HANGBOARD-FORCE-TRACKER"
 ];
 
 let projectCount = 0;
@@ -89,13 +90,13 @@ async function createProject(projectJSON) {
     projectCount++;
 
     const languages = await fetchRepositoryLanguage(projectJSON.name);
-
+    
     // TODO: trenger ikke å lage objekt, fjerna languages her
     const project = {
         title : projectJSON.name,
         description : projectJSON.description,
         url : projectJSON.html_url,
-        image : "img/placeholder.jpg"
+        image : "img/" + projectJSON.name.toUpperCase() + ".png",
     };
 
     let result = "<div class='project'>";
