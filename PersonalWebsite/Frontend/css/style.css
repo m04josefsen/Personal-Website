@@ -129,14 +129,19 @@ main {
 
 /* Project part */
 .projects {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
 }
 
 .project {
-    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    min-height: 400px; /* Ensure all boxes have same height */
+    box-sizing: border-box;
 }
 
 .project h3 {
@@ -243,9 +248,18 @@ main {
 }
 
 @media (max-width: 750px) {
-    body {
+    main {
         padding-left: 5%;
         padding-right: 5%;
+    }
+
+    .tldr h2 {
+        text-align: left;
+    }
+
+    .tldr p {
+        padding-left: 0;
+        padding-right: 0;
     }
     
     .tabs {
@@ -253,6 +267,7 @@ main {
     }
     
     .projects {
+        display: flex;
         flex-direction: column;
     }
     
